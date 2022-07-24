@@ -5,6 +5,9 @@ import com.example.greetingappdevelopment.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 public class GreetingController {
     @Autowired
@@ -27,9 +30,9 @@ public class GreetingController {
     }
 
     //UC2
-    @GetMapping("/getbyservice")
-    public String getbyservice(){
-        String message=greetingService.getmessage();
+    @GetMapping("/getmessage")
+    public String getByService() {
+        String message = greetingService.getmessage();
         return message;
     }
 
@@ -44,10 +47,44 @@ public class GreetingController {
         }
         return greetingService.sayHelloByName(firstName, lastName);
     }
+
     //UC4
-    @PostMapping("/getData")
-    public GreetingData getdata(@RequestBody GreetingData greetingData){
-     GreetingData greetingData1 = greetingService.addData(greetingData);
-     return greetingData1;
+    @PostMapping("/add")
+    public GreetingData getdata(@RequestBody GreetingData greetingData) {
+        GreetingData greetingData1 = greetingService.addData(greetingData);
+        return greetingData1;
+    }
+
+    @GetMapping("/get/{id}")
+    public Optional<GreetingData> sayHelloById(@PathVariable int id) {
+        Optional<GreetingData> response = greetingService.sayHelloById(id);
+        return response;
+    }
+
+    @GetMapping("/getall")
+    public List<GreetingData> showAll() {
+        List<GreetingData> response = greetingService.showAll();
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public GreetingData edit(@RequestBody GreetingData greetingData) {
+        return greetingService.save(greetingData);
+    }
+
+    @PutMapping("/edit/{id}")
+    //  public User edit(@RequestBody User user) {
+    public GreetingData edit(@RequestBody GreetingData greetingData, @PathVariable int id) {
+        GreetingData response;
+        response = greetingService.edit(id, greetingData);
+        return response;
+        //     return springRepository.save(user);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable int id) {
+        String response;
+        response = greetingService.delete(id);
+        return response;
     }
 }

@@ -8,6 +8,7 @@ public class GreetingAppDevelopmentApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GreetingAppDevelopmentApplication.class, args);
+        System.out.println("Welcome to Greeting App");
     }
 
 }
